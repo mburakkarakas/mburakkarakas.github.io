@@ -15,7 +15,9 @@
         body { 
             margin: 0; font-family: 'Inter', sans-serif; color: white; overflow-x: hidden;
             user-select: none; -webkit-user-select: none; 
-            cursor: default; /* Beyaz sistem imleci görünür */             
+            cursor: default; 
+            /* LOADER İÇİN BAŞLANGIÇTA GİZLE */
+            visibility: hidden; 
         }
         body.mbk-reveal { visibility: visible !important; opacity: 1 !important; transition: opacity 0.5s ease !important; background-color: transparent !important; }
 
@@ -32,7 +34,7 @@
         }
         .header-left-group { display: flex; align-items: center; gap: 40px; }
         
-        /* LOGO WRAPPER: Smooth Tilt için transition */
+        /* LOGO WRAPPER */
         .logo-wrapper { 
             display: flex; align-items: center; gap: 10px; text-decoration: none; 
             opacity: 1; transform-style: preserve-3d; will-change: transform; 
@@ -43,8 +45,6 @@
         
         nav { display: flex; gap: 30px; }
         .nav-link { font-family: 'Helvetica', 'Arial', sans-serif; font-weight: 700; font-size: 14px; color: #fff; text-decoration: none; position: relative; text-transform: uppercase; letter-spacing: 1px; transition: color 0.3s ease; }
-        
-        /* HOVER: Yazı beyaz kalır, Sopranos kırmızı efekti aktif */
         .nav-link:hover { color: #fff !important; animation: sopranos-shake 2s infinite linear; opacity: 1 !important; }
 
         .header-right-group { display: flex; align-items: center; gap: 25px; }
@@ -90,19 +90,33 @@
             align-items: flex-start;
         }
 
-        /* BAŞLIK TİLT: SOL TARAF HAVAYA KALKAR */
+        /* --- TİTREME (GLITCH) FIX --- */
+        /* Wrapper sabit durur */
         .about-title-wrapper { 
             display: inline-block; 
-            will-change: transform; 
-            transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
-            transform-origin: right center; 
             padding: 20px 0;
+            perspective: 1000px; 
+            cursor: default;
         }
-        .about-title-wrapper:hover {
-            transform: perspective(1000px) rotateY(-25deg) rotateX(5deg);
+        /* Başlık hareket eder */
+        .about-title { 
+            font-size: 5.5rem; 
+            font-weight: 900; 
+            margin: 0; 
+            color: #fff; 
+            text-transform: uppercase; 
+            text-decoration: underline; 
+            text-decoration-thickness: 2px; 
+            text-underline-offset: 15px; 
+            letter-spacing: -2px; 
+            transform-origin: right center; 
+            transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+            will-change: transform;
         }
-
-        .about-title { font-size: 5.5rem; font-weight: 900; margin: 0; color: #fff; text-transform: uppercase; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 15px; letter-spacing: -2px; pointer-events: none; }
+        /* Mouse wrapper'a gelince title döner */
+        .about-title-wrapper:hover .about-title {
+            transform: rotateY(-25deg) rotateX(5deg);
+        }
 
         .about-description { 
             font-size: 1.1rem; 
@@ -152,8 +166,8 @@
         .mbk-jelly-cursor { 
             position: fixed; top: 0; left: 0; width: 30px; height: 30px; 
             background-color: #32CD32; border-radius: 50%; pointer-events: none; 
-            z-index: 9999999999; mix-blend-mode: exclusion; opacity: 0.8; 
-            will-change: transform; transform-origin: center; 
+            z-index: 9999999999; mix-blend-mode: exclusion; opacity: 0; 
+            will-change: transform; transform-origin: center; transition: opacity 0.3s ease; 
         }
 
         /* --- FRISKY RADYO --- */
@@ -180,15 +194,14 @@
             100% { transform: skew(0deg); } 
         }
 
-/* --- SCROLLBAR --- */
-::-webkit-scrollbar { width: 8px; }
-::-webkit-scrollbar-track { background: #000; }
-::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
-/* Kırmızı yerine soft bir gri yaptık: */
-::-webkit-scrollbar-thumb:hover { background: #555; }
+        /* --- SCROLLBAR --- */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #000; }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #555; } /* Minimal Gri */
     </style>
 </head>
-<body class="mbk-reveal">
+<body>
 
     <canvas id="network-canvas"></canvas>
 
@@ -291,6 +304,41 @@
     <script>
         function toggleMenu() { document.body.classList.toggle('menu-open'); }
         
+        // --- LOADER (LOGO + TYPEWRITER .aboutme) ---
+        (function() {
+            const duration = 1500; const speed = 30;
+            const base = "mburakkarakas"; let end = ".aboutme"; // .aboutme olarak ayarlandı
+            const loader = document.createElement("div");
+            Object.assign(loader.style, {
+                position: "fixed", top: "0", left: "0", width: "100%", height: "100%",
+                backgroundColor: "#000", display: "flex", flexDirection: "column",
+                alignItems: "center", justifyContent: "center", zIndex: "2147483647"
+            });
+            const logo = document.createElement("img");
+            logo.src = "assets/mbkartsLogoPng.png"; 
+            Object.assign(logo.style, { width: "120px", height: "auto", marginBottom: "20px", opacity: "0", transition: "opacity 0.3s ease" });
+            const textEl = document.createElement("div");
+            Object.assign(textEl.style, { color: "#fff", fontFamily: "monospace", fontSize: "24px", letterSpacing: "0.1em", minHeight: "30px" });
+            loader.appendChild(logo); loader.appendChild(textEl);
+            document.documentElement.appendChild(loader);
+            setTimeout(() => { logo.style.opacity = "1"; }, 50); 
+            let i = 0;
+            function typeWriter() {
+                if (i < base.length) { textEl.textContent += base.charAt(i); i++; setTimeout(typeWriter, speed); } 
+                else { if (!textEl.textContent.includes(".")) { textEl.textContent += "."; setTimeout(typeEnd, 100); } }
+            }
+            let j = 1;
+            function typeEnd() { if (j < end.length) { textEl.textContent += end[j]; j++; setTimeout(typeEnd, speed); } }
+            typeWriter();
+            setTimeout(() => {
+                loader.style.transition = "opacity 0.4s ease"; loader.style.opacity = "0"; 
+                document.body.classList.add("mbk-reveal");
+                document.documentElement.style.backgroundColor = "";
+                setTimeout(() => loader.remove(), 400);
+            }, duration + 1000);
+        })();
+
+        // --- RADIO (MİNİMAL) ---
         var audio = document.getElementById("frisky-stream");
         var isPlaying = false;
         function toggleRadio() {
@@ -345,7 +393,11 @@
             document.body.appendChild(cursor);
             
             let mouseX = 0, mouseY = 0, cursorX = 0, cursorY = 0;
-            document.addEventListener("mousemove", e => { mouseX = e.clientX; mouseY = e.clientY; });
+            let firstMove = false;
+            document.addEventListener("mousemove", e => { 
+                mouseX = e.clientX; mouseY = e.clientY; 
+                if (!firstMove) { cursor.style.opacity = "0.8"; firstMove = true; }
+            });
             
             function animCursor() {
                 let distX = mouseX - cursorX; let distY = mouseY - cursorY;
