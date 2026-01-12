@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mehmet Burak KARAKAŞ</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;700;900&family=Courier+New&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&family=Courier+New&display=swap" rel="stylesheet">
     
     <style>
         /* --- GENEL AYARLAR --- */
@@ -25,14 +25,14 @@
             background-color: transparent !important;
         }
 
-        /* --- YENİ ARKA PLAN (CANVAS NETWORK) --- */
+        /* --- ARKA PLAN (CANVAS NETWORK) --- */
         #network-canvas {
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
-            z-index: -999; /* En arkada, her şeyin altında */
-            pointer-events: none; /* Mouse etkileşimi yok */
-            background: #000; /* Temel arka plan rengi */
+            z-index: -999; 
+            pointer-events: none; 
+            background: #000; 
         }
 
         /* --- 1. HEADER --- */
@@ -113,25 +113,23 @@
         }
         .overlay-link:hover { color: #32CD32; }
 
-        /* --- 2. HERO PROFILE (Z-Index ile korunuyor) --- */
+        /* --- 2. HERO PROFILE --- */
         .hero-section {
             min-height: 80vh; 
             display: flex; flex-direction: column; align-items: center; justify-content: center;
             padding-top: 100px; text-align: center;
-            /* ÖNEMLİ: Canvas'ın üzerinde durmasını sağlayan ayar */
             position: relative; 
             z-index: 10;
         }
 
         .profile-container {
-            width: 280px; height: 380px; /* Dikdörtgen */
+            width: 280px; height: 380px; 
             border-radius: 20px; 
             overflow: hidden; margin-bottom: 50px;
             border: 1px solid rgba(255, 255, 255, 0.15);
             box-shadow: 0 20px 40px rgba(0,0,0,0.6), 0 0 0 1px rgba(0,0,0,0.5);
             position: relative; background-color: #111; 
             transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
-            /* Performans için */
             will-change: transform; transform: translateZ(0); 
         }
 
@@ -198,11 +196,25 @@
 
         @keyframes sopranos-shake { 0% { transform: skew(0deg); filter: blur(0px); } 5% { transform: skew(-0.8deg) translateX(2px); text-shadow: -3px 0 rgba(255, 0, 0, 0.7); filter: blur(0.5px); } 10% { transform: skew(0.8deg) translateX(-1px); text-shadow: 3px 0 rgba(0, 0, 255, 0.7); filter: blur(0px); } 15% { transform: skew(0deg); } 100% { transform: skew(0deg); } }
         
-        /* JELLY CURSOR */
+        /* --- JELLY CURSOR (DÜZELTİLDİ: YEŞİL & EXCLUSION) --- */
         @media (pointer: fine) {
-            .mbk-jelly-cursor { position: fixed; top: 0; left: 0; width: 30px; height: 30px; background-color: #32CD32; border-radius: 50%; pointer-events: none; z-index: 9999999999; mix-blend-mode: exclusion; opacity: 0.8; will-change: transform; }
-            .mbk-jelly-cursor.hovered { background-color: #fff !important; opacity: 0.5; mix-blend-mode: difference; }
+            .mbk-jelly-cursor { 
+                position: fixed; top: 0; left: 0; width: 30px; height: 30px; 
+                background-color: #32CD32; /* Temel renk: Yeşil */
+                border-radius: 50%; pointer-events: none; z-index: 9999999999; 
+                mix-blend-mode: exclusion; /* Mor efektin sırrı */
+                opacity: 0.8; will-change: transform; 
+            }
+            .mbk-jelly-cursor.hovered { 
+                /* Hover durumunda rengi beyaz YAPMA, yeşil kalsın ki beyazla birleşince mor olsun */
+                background-color: #32CD32 !important; 
+                opacity: 1; 
+                mix-blend-mode: exclusion; 
+                /* Sadece büyüt */
+                transform: scale(1.5); 
+            }
         }
+
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #000; }
         ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
@@ -372,6 +384,19 @@
             const particleCount = 90; // Nokta sayısı
             const connectionDistance = 140; // Bağlantı mesafesi
             
+            // Mouse pozisyonu
+            let mouse = { x: null, y: null, radius: 150 };
+
+            window.addEventListener('mousemove', (e) => {
+                mouse.x = e.x;
+                mouse.y = e.y;
+            });
+
+            window.addEventListener('mouseleave', () => {
+                mouse.x = undefined;
+                mouse.y = undefined;
+            });
+            
             function resize() {
                 width = canvas.width = window.innerWidth;
                 height = canvas.height = window.innerHeight;
@@ -386,10 +411,29 @@
                     this.vx = (Math.random() - 0.5) * 0.5; // Yavaş hareket
                     this.vy = (Math.random() - 0.5) * 0.5;
                     this.size = Math.random() * 1.5 + 0.5; // Nokta boyutu
+                    this.density = (Math.random() * 30) + 1; 
                 }
                 update() {
                     this.x += this.vx;
                     this.y += this.vy;
+
+                    // Mouse Etkileşimi
+                    if (mouse.x != undefined && mouse.y != undefined) {
+                        let dx = mouse.x - this.x;
+                        let dy = mouse.y - this.y;
+                        let distance = Math.sqrt(dx*dx + dy*dy);
+
+                        if (distance < mouse.radius) {
+                            const forceDirectionX = dx / distance;
+                            const forceDirectionY = dy / distance;
+                            const force = (mouse.radius - distance) / mouse.radius;
+                            const directionX = forceDirectionX * force * this.density;
+                            const directionY = forceDirectionY * force * this.density;
+                            this.x -= directionX; 
+                            this.y -= directionY;
+                        }
+                    }
+
                     if (this.x < 0 || this.x > width) this.vx *= -1;
                     if (this.y < 0 || this.y > height) this.vy *= -1;
                 }
@@ -422,7 +466,7 @@
                             ctx.moveTo(particles[i].x, particles[i].y);
                             ctx.lineTo(particles[j].x, particles[j].y);
                             const opacity = 1 - dist / connectionDistance;
-                            // DÜZELTME: Daha belirgin çizgi (%30 opaklık çarpanı) ve biraz daha kalın (0.6)
+                            // DÜZELTME: Daha belirgin çizgi (%30 opaklık) ve biraz kalın (0.6)
                             ctx.strokeStyle = `rgba(255, 255, 255, ${opacity * 0.3})`; 
                             ctx.lineWidth = 0.6;
                             ctx.stroke();
@@ -434,8 +478,6 @@
             init();
             animate();
         })();
-        // --------------------------------------------------
-
 
         // --- 1. JELLY CURSOR ---
         document.addEventListener("DOMContentLoaded", () => {
