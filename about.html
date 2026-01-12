@@ -4,19 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Me - Mehmet Burak KARAKAŞ</title>
+    
+    <link rel="icon" type="image/png" href="image_0.png">
+    
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&family=Courier+New&display=swap" rel="stylesheet">
     
     <style>
-        /* --- GENEL AYARLAR (BOZULMADI) --- */
-        html { background-color: #000 !important; }
+        /* --- GENEL AYARLAR --- */
+        html { background-color: #000 !important; scroll-behavior: smooth; }
         body { 
             margin: 0; font-family: 'Inter', sans-serif; color: white; overflow-x: hidden;
             user-select: none; -webkit-user-select: none; 
-            cursor: none; /* Jelly cursor için gerçek mouse gizlendi */             
+            cursor: default; /* Beyaz sistem imleci görünür */             
         }
         body.mbk-reveal { visibility: visible !important; opacity: 1 !important; transition: opacity 0.5s ease !important; background-color: transparent !important; }
 
-        /* --- ARKA PLAN (BOZULMADI) --- */
+        /* --- ARKA PLAN --- */
         #network-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -999; pointer-events: none; background: #000; }
 
         /* --- 1. HEADER & HAMBURGER --- */
@@ -28,13 +31,21 @@
             backdrop-filter: blur(5px);
         }
         .header-left-group { display: flex; align-items: center; gap: 40px; }
-        .logo-wrapper { display: flex; align-items: center; gap: 10px; text-decoration: none; opacity: 1; transition: transform 0.1s; transform-style: preserve-3d; will-change: transform; cursor: pointer; }
+        
+        /* LOGO WRAPPER: Smooth Tilt için transition */
+        .logo-wrapper { 
+            display: flex; align-items: center; gap: 10px; text-decoration: none; 
+            opacity: 1; transform-style: preserve-3d; will-change: transform; 
+            cursor: pointer; transition: transform 0.3s ease-out; 
+        }
         .logo-img { height: 40px; width: auto; object-fit: contain; filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.5)); }
         .logo-text { font-family: 'Helvetica', 'Arial', sans-serif; font-weight: 900; font-size: 20px; letter-spacing: -1px; color: #fff; }
         
         nav { display: flex; gap: 30px; }
-        .nav-link { font-family: 'Helvetica', 'Arial', sans-serif; font-weight: 700; font-size: 14px; color: #fff; text-decoration: none; position: relative; text-transform: uppercase; letter-spacing: 1px; }
-        .nav-link:hover { animation: sopranos-shake 2s infinite linear; opacity: 1 !important; }
+        .nav-link { font-family: 'Helvetica', 'Arial', sans-serif; font-weight: 700; font-size: 14px; color: #fff; text-decoration: none; position: relative; text-transform: uppercase; letter-spacing: 1px; transition: color 0.3s ease; }
+        
+        /* HOVER: Yazı beyaz kalır, Sopranos kırmızı efekti aktif */
+        .nav-link:hover { color: #fff !important; animation: sopranos-shake 2s infinite linear; opacity: 1 !important; }
 
         .header-right-group { display: flex; align-items: center; gap: 25px; }
         .social-wrapper { display: flex; align-items: center; gap: 15px; }
@@ -46,11 +57,10 @@
 
         .header-separator { width: 1px; height: 20px; background-color: rgba(255,255,255,0.2); }
 
-        /* HAMBURGER TAMİRİ */
         .menu-toggle { cursor: pointer; width: 30px; height: 20px; display: flex; flex-direction: column; justify-content: space-between; z-index: 10005; position: relative; }
         .bar { width: 100%; height: 2px; background-color: #fff; border-radius: 2px; transition: 0.4s cubic-bezier(0.68, -0.6, 0.32, 1.6); }
         body.menu-open .bar:nth-child(1) { transform: translateY(9px) rotate(45deg); }
-        body.menu-open .bar:nth-child(2) { opacity: 0; }
+        body.menu-open .bar:nth-child(2) { opacity: 0; transform: translateX(-20px); }
         body.menu-open .bar:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
 
         .overlay-menu { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background-color: #000; z-index: 10000; display: flex; flex-direction: column; justify-content: center; align-items: center; opacity: 0; visibility: hidden; transition: 0.5s ease; pointer-events: none; }
@@ -59,12 +69,72 @@
         .overlay-link { font-size: 3rem; font-weight: 900; color: #fff; text-decoration: none; text-transform: uppercase; transition: 0.3s; }
         .overlay-link:hover { color: #32CD32; }
 
-        /* --- 2. ABOUT CONTENT & 3D TILT --- */
-        .about-section { min-height: 100vh; display: flex; align-items: center; justify-content: flex-start; padding-left: 100px; box-sizing: border-box; position: relative; z-index: 10; }
-        .about-container { max-width: 800px; display: flex; flex-direction: column; gap: 20px; }
-        .about-title-wrapper { display: inline-block; will-change: transform; transform-style: preserve-3d; backface-visibility: hidden; padding: 20px 0; }
-        .about-title { font-size: 6rem; font-weight: 900; margin: 0; color: #fff; text-transform: uppercase; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 15px; letter-spacing: -2px; pointer-events: none; }
-        .about-description { font-size: 1.2rem; color: #ccc; line-height: 1.6; max-width: 600px; font-weight: 300; opacity: 0.8; margin-top: 20px; }
+        /* --- 2. ABOUT ME SECTION --- */
+        .about-section { 
+            min-height: 100vh; 
+            display: flex; 
+            align-items: center; 
+            justify-content: space-between; 
+            padding: 120px 10% 120px 15%; 
+            box-sizing: border-box; 
+            position: relative; 
+            z-index: 10;
+            gap: 60px;
+        }
+
+        .about-text-wrapper { 
+            flex: 1;
+            max-width: 800px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        /* BAŞLIK TİLT: SOL TARAF HAVAYA KALKAR */
+        .about-title-wrapper { 
+            display: inline-block; 
+            will-change: transform; 
+            transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+            transform-origin: right center; 
+            padding: 20px 0;
+        }
+        .about-title-wrapper:hover {
+            transform: perspective(1000px) rotateY(-25deg) rotateX(5deg);
+        }
+
+        .about-title { font-size: 5.5rem; font-weight: 900; margin: 0; color: #fff; text-transform: uppercase; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 15px; letter-spacing: -2px; pointer-events: none; }
+
+        .about-description { 
+            font-size: 1.1rem; 
+            color: #ccc; 
+            line-height: 1.7; 
+            font-weight: 300; 
+            opacity: 0.9; 
+            margin-top: 30px; 
+            text-align: justify; 
+        }
+
+        .about-photo-wrapper {
+            flex: 0.8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .about-photo-wrapper img {
+            width: 100%;
+            max-width: 500px;
+            height: auto;
+            border-radius: 10px;
+            filter: grayscale(100%) opacity(0.2); 
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            object-fit: contain;
+        }
+
+        .about-photo-wrapper img:hover {
+            filter: grayscale(0%) opacity(1);
+            transform: scale(1.02);
+        }
 
         /* --- 3. FOOTER --- */
         .page-footer { padding: 60px 50px; display: flex; align-items: center; background-color: #000; flex-wrap: wrap; gap: 20px; position: relative; z-index: 10; }
@@ -75,8 +145,16 @@
         .footer-btn::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 2px; background-color: #cc0000; transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
         .footer-btn:hover { color: #cc0000; }
         .footer-btn:hover::after { width: 100%; }
-        .footer-logo-img { width: 150px; filter: drop-shadow(0 0 10px rgba(255,255,255,0.1)); opacity: 1; transform-style: preserve-3d; will-change: transform; transition: transform 0.1s ease-out; }
+        .footer-logo-img { width: 150px; filter: drop-shadow(0 0 10px rgba(255,255,255,0.1)); opacity: 1; transform-style: preserve-3d; will-change: transform; transition: transform 0.3s ease-out; cursor: pointer; }
         .copyright { width: 100%; font-size: 0.8rem; color: #555; text-align: center; margin-top: 40px; }
+
+        /* --- JELLY CURSOR STYLES --- */
+        .mbk-jelly-cursor { 
+            position: fixed; top: 0; left: 0; width: 30px; height: 30px; 
+            background-color: #32CD32; border-radius: 50%; pointer-events: none; 
+            z-index: 9999999999; mix-blend-mode: exclusion; opacity: 0.8; 
+            will-change: transform; transform-origin: center; 
+        }
 
         /* --- FRISKY RADYO --- */
         #mbk-radio-player { position: fixed; bottom: 30px; right: 30px; z-index: 9999; background: rgba(10, 0, 0, 0.95); backdrop-filter: blur(10px); border: 1px solid rgba(255, 0, 0, 0.3); border-radius: 40px; padding: 8px 18px; display: flex; align-items: center; gap: 12px; transition: all 0.4s; box-shadow: 0 5px 20px rgba(0,0,0,0.6); max-width: 160px; overflow: hidden; }
@@ -93,10 +171,15 @@
         input[type=range]::-webkit-slider-runnable-track { width: 100%; height: 2px; background: #555; }
         input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; height: 10px; width: 10px; border-radius: 50%; background: #fff; margin-top: -4px; cursor: pointer; }
 
-        /* --- JELLY CURSOR --- */
-        .mbk-jelly-cursor { position: fixed; top: 0; left: 0; width: 30px; height: 30px; background-color: #32CD32; border-radius: 50%; pointer-events: none; z-index: 9999999999; mix-blend-mode: exclusion; opacity: 0.8; will-change: transform; transform-origin: center; }
+        /* SOPRANOS KEYFRAMES: KIRMIZI */
+        @keyframes sopranos-shake { 
+            0% { transform: skew(0deg); } 
+            5% { transform: skew(-0.8deg) translateX(2px); text-shadow: -3px 0 rgba(255, 0, 0, 0.7); } 
+            10% { transform: skew(0.8deg) translateX(-1px); text-shadow: 3px 0 rgba(204, 0, 0, 0.8); } 
+            15% { transform: skew(0deg); } 
+            100% { transform: skew(0deg); } 
+        }
 
-        @keyframes sopranos-shake { 0% { transform: skew(0deg); } 5% { transform: skew(-0.8deg) translateX(2px); text-shadow: -3px 0 rgba(255, 0, 0, 0.7); } 10% { transform: skew(0.8deg) translateX(-1px); text-shadow: 3px 0 rgba(0, 0, 255, 0.7); } 15% { transform: skew(0deg); } 100% { transform: skew(0deg); } }
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #000; }
         ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
@@ -115,9 +198,9 @@
             </a>
             <nav>
                 <a href="index.html" class="nav-link">Home</a>
-                <a href="#" class="nav-link">Projects</a>
-                <a href="#" class="nav-link">About</a>
-                <a href="#" class="nav-link">Contact</a>
+                <a href="projects.html" class="nav-link">Projects</a>
+                <a href="about.html" class="nav-link">About</a>
+                <a href="contact.html" class="nav-link">Contact</a>
             </nav>
         </div>
         <div class="header-right-group">
@@ -142,27 +225,37 @@
     <div class="overlay-menu">
         <div class="overlay-nav">
             <a href="index.html" class="overlay-link" onclick="toggleMenu()">HOME</a>
-            <a href="#" class="overlay-link" onclick="toggleMenu()">PROJECTS</a>
-            <a href="#" class="overlay-link" onclick="toggleMenu()">ABOUT</a>
-            <a href="#" class="overlay-link" onclick="toggleMenu()">CONTACT</a>
+            <a href="projects.html" class="overlay-link" onclick="toggleMenu()">PROJECTS</a>
+            <a href="about.html" class="overlay-link" onclick="toggleMenu()">ABOUT</a>
+            <a href="contact.html" class="overlay-link" onclick="toggleMenu()">CONTACT</a>
         </div>
     </div>
 
     <section class="about-section">
-        <div class="about-container">
-            <div class="about-title-wrapper smooth-tilt-item">
+        <div class="about-text-wrapper">
+            <div class="about-title-wrapper">
                 <h1 class="about-title">About Me</h1>
             </div>
-            <p class="about-description">Cartoon and Animation graduate from Dokuz Eylül University. Passionate about Game Development, Digital Experience Design, and 3D Arts. Creating interactive worlds and unique visual stories.</p>
+            <div class="about-description">
+                <p>Mehmet Burak Karakas is an artist born in Silivri, Istanbul, originally from Tekirdag. Since childhood, he has been passionate about drawing cartoons, and over time, he has specialized in character design, game development, and animation.</p>
+                <p>He graduated from the Department of Cartoon and Animation at the Faculty of Fine Arts, Dokuz Eylül University, completing a 4-year program. He is also pursuing a second bachelor’s degree in Visual Communication Design at Anadolu University.</p>
+                <p>Among his notable projects is the 2024 animated documentary “Favela izmir”, which draws parallels between Kadifekale in izmir and the favelas of Brazil. In 2025, he developed the video game “Sector 9: The Awakening”, for which he designed all characters, animation sprites, and 3D environment models himself, using artificial intelligence only in the coding process.</p>
+                <p>As for collaborative works, one of the highlights is the animated film “The Rhythm of izmir”, where he transformed selected photographs into moving animations. The film won an award in Itabuna, Brazil, as part of a team effort. He also contributed to the animated film “Mind Halt”, where he was part of the 3D team, assisting in set dressing and 3D modeling.</p>
+                <p>Karakas continues to engage in both individual and collaborative projects, combining his technical expertise with a creative vision. For him, animation, character design, and game development are not merely professions, but lifelong passions.</p>
+            </div>
+        </div>
+
+        <div class="about-photo-wrapper">
+            <img src="assets/aboutmePhoto.png" alt="Mehmet Burak Karakaş">
         </div>
     </section>
 
     <footer class="page-footer">
         <div class="footer-left">
             <a href="index.html" class="footer-btn">HOME</a>
-            <a href="#" class="footer-btn">Projects</a>
-            <a href="#" class="footer-btn">About Me</a>
-            <a href="#" class="footer-btn">Contact</a>
+            <a href="projects.html" class="footer-btn">Projects</a>
+            <a href="about.html" class="footer-btn">About Me</a>
+            <a href="contact.html" class="footer-btn">Contact</a>
         </div>
         <div class="footer-center"><img src="assets/mbkartsLogoPng.png" alt="MBK Art" class="footer-logo-img simple-tilt"></div>
         <div class="footer-right">
@@ -174,7 +267,7 @@
             <a href="https://www.behance.net/mburakkarakas" target="_blank" class="social-link"><img src="assets/behance.png" class="social-img invert-me"></a>
             <a href="https://sketchfab.com/mburakkarakas" target="_blank" class="social-link"><img src="assets/sketchfab.png" class="social-img invert-me"></a>
             <a href="https://soundcloud.com/karakash" target="_blank" class="social-link"><img src="assets/soundcloud.png" class="social-img invert-me"></a>
-            <a href="mailto:mburakkarakas@outlook.com" class="social-link"><img src="assets/mail.png" class="social-img invert-me"></a>
+            <a href="mailto:mburakkarakas@outlook.com" class="social-link"><img src="assets/mail.png" class="social-img invert-me" style="transform: scale(1.2);"></a>
         </div>
         <div class="copyright"> © 2015-2026 mburakkarakas.art All rights reserved | Atomtan Arts & Atomtan Games </div>
     </footer>
@@ -196,7 +289,6 @@
     <script>
         function toggleMenu() { document.body.classList.toggle('menu-open'); }
         
-        // --- RADIO ---
         var audio = document.getElementById("frisky-stream");
         var isPlaying = false;
         function toggleRadio() {
@@ -206,7 +298,6 @@
         }
         function setVolume(val) { audio.volume = val; }
 
-        // --- NETWORK CANVAS ---
         (function() {
             const canvas = document.getElementById('network-canvas'); const ctx = canvas.getContext('2d');
             let width, height, particles = [];
@@ -245,11 +336,15 @@
             animate();
         })();
 
-        // --- JELLY CURSOR (Uzayan/Esneyen Mantık) ---
+        // --- JELLY CURSOR ---
         document.addEventListener("DOMContentLoaded", () => {
-            const cursor = document.createElement("div"); cursor.classList.add("mbk-jelly-cursor"); document.body.appendChild(cursor);
+            const cursor = document.createElement("div"); 
+            cursor.classList.add("mbk-jelly-cursor"); 
+            document.body.appendChild(cursor);
+            
             let mouseX = 0, mouseY = 0, cursorX = 0, cursorY = 0;
             document.addEventListener("mousemove", e => { mouseX = e.clientX; mouseY = e.clientY; });
+            
             function animCursor() {
                 let distX = mouseX - cursorX; let distY = mouseY - cursorY;
                 cursorX += distX * 0.15; cursorY += distY * 0.15;
@@ -261,38 +356,25 @@
                 requestAnimationFrame(animCursor);
             }
             animCursor();
-            document.querySelectorAll("a, button, .menu-toggle").forEach(l => {
-                l.addEventListener("mouseenter", () => cursor.style.backgroundColor = "#fff");
+            
+            document.querySelectorAll("a, button, .menu-toggle, .simple-tilt").forEach(l => {
+                l.addEventListener("mouseenter", () => cursor.style.backgroundColor = "#32CD32");
                 l.addEventListener("mouseleave", () => cursor.style.backgroundColor = "#32CD32");
             });
         });
 
-        // --- 3D SMOOTH TILT (About Me) ---
-        const smoothTiltItems = document.querySelectorAll('.smooth-tilt-item');
-        const lerp = (start, end, factor) => start + (end - start) * factor;
-        smoothTiltItems.forEach(el => {
-            let currY = 0, targetY = 0, isHover = false;
-            const update = () => {
-                if (!isHover && Math.abs(targetY - currY) < 0.05) { el.style.transform = `perspective(1000px) rotateY(0deg)`; return; }
-                currY = lerp(currY, targetY, 0.08);
-                el.style.transform = `perspective(1000px) rotateY(${currY}deg)`;
-                requestAnimationFrame(update);
-            };
-            el.addEventListener('mousemove', (e) => {
-                if (!isHover) { isHover = true; update(); }
-                const rect = el.getBoundingClientRect();
-                targetY = ((e.clientX - rect.left) / rect.width - 0.5) * 40;
-            });
-            el.addEventListener('mouseleave', () => { isHover = false; targetY = 0; });
-        });
-
-        // --- LOGO TILT ---
+        // --- LOGO TILT (SMOOTH) ---
         document.querySelectorAll('.simple-tilt').forEach(el => {
             el.addEventListener('mousemove', (e) => {
                 const r = el.getBoundingClientRect();
-                el.style.transform = `perspective(500px) rotateX(${(e.clientY - r.top - r.height/2)/-10}deg) rotateY(${(e.clientX - r.left - r.width/2)/10}deg) scale(1.1)`;
+                const x = e.clientX - r.left; const y = e.clientY - r.top;
+                const xc = r.width / 2; const yc = r.height / 2;
+                const dx = x - xc; const dy = y - yc;
+                el.style.transform = `perspective(500px) rotateX(${dy/-12}deg) rotateY(${dx/12}deg) scale(1.05)`;
             });
-            el.addEventListener('mouseleave', () => el.style.transform = `perspective(500px) rotateX(0) rotateY(0) scale(1)`);
+            el.addEventListener('mouseleave', () => {
+                el.style.transform = `perspective(500px) rotateX(0) rotateY(0) scale(1)`;
+            });
         });
     </script>
 </body>
