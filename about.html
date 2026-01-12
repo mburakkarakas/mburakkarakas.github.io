@@ -4,9 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Me - Mehmet Burak KARAKAŞ</title>
-    
     <link rel="icon" type="image/png" href="image_0.png">
-    
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&family=Courier+New&display=swap" rel="stylesheet">
     
     <style>
@@ -14,12 +12,9 @@
         html { background-color: #000 !important; scroll-behavior: smooth; }
         body { 
             margin: 0; font-family: 'Inter', sans-serif; color: white; overflow-x: hidden;
-            user-select: none; -webkit-user-select: none; 
-            cursor: default; /* Beyaz sistem imleci görünür */             
+            user-select: none; -webkit-user-select: none; cursor: default;             
         }
         body.mbk-reveal { visibility: visible !important; opacity: 1 !important; transition: opacity 0.5s ease !important; background-color: transparent !important; }
-
-        /* --- ARKA PLAN --- */
         #network-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -999; pointer-events: none; background: #000; }
 
         /* --- 1. HEADER & HAMBURGER --- */
@@ -31,20 +26,12 @@
             backdrop-filter: blur(5px);
         }
         .header-left-group { display: flex; align-items: center; gap: 40px; }
-        
-        /* LOGO WRAPPER: Smooth Tilt için transition */
-        .logo-wrapper { 
-            display: flex; align-items: center; gap: 10px; text-decoration: none; 
-            opacity: 1; transform-style: preserve-3d; will-change: transform; 
-            cursor: pointer; transition: transform 0.3s ease-out; 
-        }
+        .logo-wrapper { display: flex; align-items: center; gap: 10px; text-decoration: none; opacity: 1; transform-style: preserve-3d; will-change: transform; cursor: pointer; transition: transform 0.3s ease-out; }
         .logo-img { height: 40px; width: auto; object-fit: contain; filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.5)); }
         .logo-text { font-family: 'Helvetica', 'Arial', sans-serif; font-weight: 900; font-size: 20px; letter-spacing: -1px; color: #fff; }
         
         nav { display: flex; gap: 30px; }
         .nav-link { font-family: 'Helvetica', 'Arial', sans-serif; font-weight: 700; font-size: 14px; color: #fff; text-decoration: none; position: relative; text-transform: uppercase; letter-spacing: 1px; transition: color 0.3s ease; }
-        
-        /* HOVER: Yazı beyaz kalır, Sopranos kırmızı efekti aktif */
         .nav-link:hover { color: #fff !important; animation: sopranos-shake 2s infinite linear; opacity: 1 !important; }
 
         .header-right-group { display: flex; align-items: center; gap: 25px; }
@@ -54,14 +41,13 @@
         .invert-me { filter: invert(1); }
         .social-link:hover { transform: translateY(-3px); }
         .social-link:hover .social-img { opacity: 1; filter: invert(18%) sepia(88%) saturate(5833%) hue-rotate(356deg) brightness(93%) contrast(116%); }
-
         .header-separator { width: 1px; height: 20px; background-color: rgba(255,255,255,0.2); }
 
-        .menu-toggle { cursor: pointer; width: 30px; height: 20px; display: flex; flex-direction: column; justify-content: space-between; z-index: 10005; position: relative; }
+        .menu-toggle { cursor: pointer; width: 30px; height: 20px; display: flex; flex-direction: column; justify-content: space-between; z-index: 10005; }
         .bar { width: 100%; height: 2px; background-color: #fff; border-radius: 2px; transition: 0.4s cubic-bezier(0.68, -0.6, 0.32, 1.6); }
-        body.menu-open .bar:nth-child(1) { transform: translateY(9px) rotate(45deg); }
+        body.menu-open .bar:nth-child(1) { transform: rotate(45deg) translate(5px, 8px); }
         body.menu-open .bar:nth-child(2) { opacity: 0; transform: translateX(-20px); }
-        body.menu-open .bar:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
+        body.menu-open .bar:nth-child(3) { transform: rotate(-45deg) translate(5px, -8px); }
 
         .overlay-menu { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background-color: #000; z-index: 10000; display: flex; flex-direction: column; justify-content: center; align-items: center; opacity: 0; visibility: hidden; transition: 0.5s ease; pointer-events: none; }
         body.menu-open .overlay-menu { opacity: 1; visibility: visible; pointer-events: auto; }
@@ -70,93 +56,41 @@
         .overlay-link:hover { color: #32CD32; }
 
         /* --- 2. ABOUT ME SECTION --- */
-        .about-section { 
-            min-height: 100vh; 
-            display: flex; 
-            align-items: center; 
-            justify-content: space-between; 
-            padding: 120px 10% 120px 15%; 
-            box-sizing: border-box; 
-            position: relative; 
-            z-index: 10;
-            gap: 60px;
-        }
-
-        .about-text-wrapper { 
-            flex: 1;
-            max-width: 800px;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-        }
-
-        /* BAŞLIK TİLT: SOL TARAF HAVAYA KALKAR */
-        .about-title-wrapper { 
-            display: inline-block; 
-            will-change: transform; 
-            transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
-            transform-origin: right center; 
-            padding: 20px 0;
-        }
-        .about-title-wrapper:hover {
-            transform: perspective(1000px) rotateY(-25deg) rotateX(5deg);
-        }
-
+        .about-section { min-height: 100vh; display: flex; align-items: center; justify-content: space-between; padding: 120px 10% 120px 15%; box-sizing: border-box; position: relative; z-index: 10; gap: 60px; }
+        .about-text-wrapper { flex: 1; max-width: 800px; display: flex; flex-direction: column; align-items: flex-start; }
+        .about-title-wrapper { display: inline-block; will-change: transform; transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1); transform-origin: right center; padding: 20px 0; }
+        .about-title-wrapper:hover { transform: perspective(1000px) rotateY(-25deg) rotateX(5deg); }
         .about-title { font-size: 5.5rem; font-weight: 900; margin: 0; color: #fff; text-transform: uppercase; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 15px; letter-spacing: -2px; pointer-events: none; }
-
-        .about-description { 
-            font-size: 1.1rem; 
-            color: #ccc; 
-            line-height: 1.7; 
-            font-weight: 300; 
-            opacity: 0.9; 
-            margin-top: 30px; 
-            text-align: justify; 
-        }
-
-        .about-photo-wrapper {
-            flex: 0.8;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .about-photo-wrapper img {
-            width: 100%;
-            max-width: 500px;
-            height: auto;
-            border-radius: 10px;
-            filter: grayscale(100%) opacity(0.2); 
-            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-            object-fit: contain;
-        }
-
-        .about-photo-wrapper img:hover {
-            filter: grayscale(0%) opacity(1);
-            transform: scale(1.02);
-        }
+        .about-description { font-size: 1.1rem; color: #ccc; line-height: 1.7; font-weight: 300; opacity: 0.9; margin-top: 30px; text-align: justify; }
+        .about-photo-wrapper { flex: 0.8; display: flex; justify-content: center; align-items: center; }
+        .about-photo-wrapper img { width: 100%; max-width: 500px; height: auto; border-radius: 10px; filter: grayscale(100%) opacity(0.2); transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1); object-fit: contain; }
+        .about-photo-wrapper img:hover { filter: grayscale(0%) opacity(1); transform: scale(1.02); }
 
         /* --- 3. FOOTER --- */
         .page-footer { padding: 60px 50px; display: flex; align-items: center; background-color: #000; flex-wrap: wrap; gap: 20px; position: relative; z-index: 10; }
         .footer-left { flex: 1; display: flex; flex-direction: column; gap: 15px; align-items: flex-start; }
         .footer-center { flex: 0 auto; display: flex; justify-content: center; align-items: center; margin: 0 20px; }
         .footer-right { flex: 1; display: flex; gap: 15px; align-items: center; justify-content: flex-end; }
-        .footer-btn { font-size: 1rem; font-weight: 700; color: #fff; text-decoration: none; text-transform: uppercase; letter-spacing: 1px; padding: 5px 0; transition: color 0.3s; cursor: pointer; position: relative; width: fit-content; }
-        .footer-btn::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 2px; background-color: #cc0000; transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        .footer-btn { font-size: 1rem; font-weight: 700; color: #fff; text-decoration: none; text-transform: uppercase; letter-spacing: 1px; padding: 5px 0; position: relative; transition: color 0.3s; }
+        .footer-btn::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background-color: #cc0000; transition: 0.3s; }
         .footer-btn:hover { color: #cc0000; }
         .footer-btn:hover::after { width: 100%; }
-        .footer-logo-img { width: 150px; filter: drop-shadow(0 0 10px rgba(255,255,255,0.1)); opacity: 1; transform-style: preserve-3d; will-change: transform; transition: transform 0.3s ease-out; cursor: pointer; }
+        .footer-logo-img { width: 150px; filter: drop-shadow(0 0 10px rgba(255,255,255,0.1)); opacity: 1; transform-style: preserve-3d; transition: transform 0.3s ease-out; cursor: pointer; }
         .copyright { width: 100%; font-size: 0.8rem; color: #555; text-align: center; margin-top: 40px; }
 
-        /* --- JELLY CURSOR STYLES --- */
-        .mbk-jelly-cursor { 
-            position: fixed; top: 0; left: 0; width: 30px; height: 30px; 
-            background-color: #32CD32; border-radius: 50%; pointer-events: none; 
-            z-index: 9999999999; mix-blend-mode: exclusion; opacity: 0.8; 
-            will-change: transform; transform-origin: center; 
+        /* --- JELLY CURSOR --- */
+        .mbk-jelly-cursor { position: fixed; top: 0; left: 0; width: 30px; height: 30px; background-color: #32CD32; border-radius: 50%; pointer-events: none; z-index: 9999999999; mix-blend-mode: exclusion; opacity: 0.8; will-change: transform; transform-origin: center; }
+
+        /* SOPRANOS KEYFRAMES: KIRMIZI */
+        @keyframes sopranos-shake { 
+            0% { transform: skew(0deg); } 
+            5% { transform: skew(-0.8deg) translateX(2px); text-shadow: -3px 0 rgba(255, 0, 0, 0.7); } 
+            10% { transform: skew(0.8deg) translateX(-1px); text-shadow: 3px 0 rgba(204, 0, 0, 0.8); } 
+            15% { transform: skew(0deg); } 
+            100% { transform: skew(0deg); } 
         }
 
-        /* --- FRISKY RADYO --- */
+        /* --- 4. RADIO PLAYER (MİNİMAL) --- */
         #mbk-radio-player { position: fixed; bottom: 30px; right: 30px; z-index: 9999; background: rgba(10, 0, 0, 0.95); backdrop-filter: blur(10px); border: 1px solid rgba(255, 0, 0, 0.3); border-radius: 40px; padding: 8px 18px; display: flex; align-items: center; gap: 12px; transition: all 0.4s; box-shadow: 0 5px 20px rgba(0,0,0,0.6); max-width: 160px; overflow: hidden; }
         #mbk-radio-player:hover { max-width: 320px; border-color: #cc0000; }
         #radio-toggle { background: transparent; border: 1px solid #fff; color: #fff; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 12px; flex-shrink: 0; transition: 0.3s; }
@@ -170,16 +104,6 @@
         input[type=range] { -webkit-appearance: none; width: 70px; background: transparent; }
         input[type=range]::-webkit-slider-runnable-track { width: 100%; height: 2px; background: #555; }
         input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; height: 10px; width: 10px; border-radius: 50%; background: #fff; margin-top: -4px; cursor: pointer; }
-
-        /* SOPRANOS KEYFRAMES: KIRMIZI */
-        @keyframes sopranos-shake { 
-            0% { transform: skew(0deg); } 
-            5% { transform: skew(-0.8deg) translateX(2px); text-shadow: -3px 0 rgba(255, 0, 0, 0.7); } 
-            10% { transform: skew(0.8deg) translateX(-1px); text-shadow: 3px 0 rgba(204, 0, 0, 0.8); } 
-            15% { transform: skew(0deg); } 
-            100% { transform: skew(0deg); } 
-        }
-
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #000; }
         ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
@@ -187,9 +111,7 @@
     </style>
 </head>
 <body class="mbk-reveal">
-
     <canvas id="network-canvas"></canvas>
-
     <header>
         <div class="header-left-group">
             <a href="index.html" class="logo-wrapper simple-tilt">
@@ -244,7 +166,6 @@
                 <p>Karakas continues to engage in both individual and collaborative projects, combining his technical expertise with a creative vision. For him, animation, character design, and game development are not merely professions, but lifelong passions.</p>
             </div>
         </div>
-
         <div class="about-photo-wrapper">
             <img src="assets/aboutmePhoto.png" alt="Mehmet Burak Karakaş">
         </div>
@@ -267,7 +188,7 @@
             <a href="https://www.behance.net/mburakkarakas" target="_blank" class="social-link"><img src="assets/behance.png" class="social-img invert-me"></a>
             <a href="https://sketchfab.com/mburakkarakas" target="_blank" class="social-link"><img src="assets/sketchfab.png" class="social-img invert-me"></a>
             <a href="https://soundcloud.com/karakash" target="_blank" class="social-link"><img src="assets/soundcloud.png" class="social-img invert-me"></a>
-            <a href="mailto:mburakkarakas@outlook.com" class="social-link"><img src="assets/mail.png" class="social-img invert-me" style="transform: scale(1.2);"></a>
+            <a href="mailto:mburakkarakas@outlook.com" class="social-link"><img src="assets/mail.png" class="social-img invert-me"></a>
         </div>
         <div class="copyright"> © 2015-2026 mburakkarakas.art All rights reserved | Atomtan Arts & Atomtan Games </div>
     </footer>
@@ -288,7 +209,6 @@
 
     <script>
         function toggleMenu() { document.body.classList.toggle('menu-open'); }
-        
         var audio = document.getElementById("frisky-stream");
         var isPlaying = false;
         function toggleRadio() {
@@ -306,15 +226,15 @@
             function resize() { width = canvas.width = window.innerWidth; height = canvas.height = window.innerHeight; }
             window.addEventListener('resize', resize); resize();
             class Particle {
-                constructor() { this.x = Math.random()*width; this.y = Math.random()*height; this.vx = (Math.random()-0.5)*0.5; this.vy = (Math.random()-0.5)*0.5; this.size = Math.random()*1.5+0.5; this.density = Math.random()*30+1; }
+                constructor() { this.x = Math.random()*width; this.y = Math.random()*height; this.vx = (Math.random()-0.5)*0.5; this.vy = (Math.random()-0.5)*0.5; this.size = Math.random()*1.5+0.5; this.density = (Math.random()*30)+1; }
                 update() {
                     this.x += this.vx; this.y += this.vy;
                     if (mouse.x != null) {
                         let dx = mouse.x - this.x; let dy = mouse.y - this.y; let dist = Math.sqrt(dx*dx + dy*dy);
                         if (dist < mouse.radius) {
                             const force = (mouse.radius - dist) / mouse.radius;
-                            this.x -= (dx / dist) * force * this.density * 0.2;
-                            this.y -= (dy / dist) * force * this.density * 0.2;
+                            this.x -= (dx/dist) * force * this.density * 0.2;
+                            this.y -= (dy/dist) * force * this.density * 0.2;
                         }
                     }
                     if (this.x < 0 || this.x > width) this.vx *= -1; if (this.y < 0 || this.y > height) this.vy *= -1;
@@ -336,15 +256,10 @@
             animate();
         })();
 
-        // --- JELLY CURSOR ---
         document.addEventListener("DOMContentLoaded", () => {
-            const cursor = document.createElement("div"); 
-            cursor.classList.add("mbk-jelly-cursor"); 
-            document.body.appendChild(cursor);
-            
+            const cursor = document.createElement("div"); cursor.classList.add("mbk-jelly-cursor"); document.body.appendChild(cursor);
             let mouseX = 0, mouseY = 0, cursorX = 0, cursorY = 0;
             document.addEventListener("mousemove", e => { mouseX = e.clientX; mouseY = e.clientY; });
-            
             function animCursor() {
                 let distX = mouseX - cursorX; let distY = mouseY - cursorY;
                 cursorX += distX * 0.15; cursorY += distY * 0.15;
@@ -356,25 +271,19 @@
                 requestAnimationFrame(animCursor);
             }
             animCursor();
-            
             document.querySelectorAll("a, button, .menu-toggle, .simple-tilt").forEach(l => {
                 l.addEventListener("mouseenter", () => cursor.style.backgroundColor = "#32CD32");
                 l.addEventListener("mouseleave", () => cursor.style.backgroundColor = "#32CD32");
             });
         });
 
-        // --- LOGO TILT (SMOOTH) ---
         document.querySelectorAll('.simple-tilt').forEach(el => {
             el.addEventListener('mousemove', (e) => {
                 const r = el.getBoundingClientRect();
-                const x = e.clientX - r.left; const y = e.clientY - r.top;
-                const xc = r.width / 2; const yc = r.height / 2;
-                const dx = x - xc; const dy = y - yc;
+                const dx = e.clientX - (r.left + r.width/2), dy = e.clientY - (r.top + r.height/2);
                 el.style.transform = `perspective(500px) rotateX(${dy/-12}deg) rotateY(${dx/12}deg) scale(1.05)`;
             });
-            el.addEventListener('mouseleave', () => {
-                el.style.transform = `perspective(500px) rotateX(0) rotateY(0) scale(1)`;
-            });
+            el.addEventListener('mouseleave', () => el.style.transform = `perspective(500px) rotateX(0) rotateY(0) scale(1)`);
         });
     </script>
 </body>
