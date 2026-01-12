@@ -17,7 +17,7 @@
         body.mbk-reveal { visibility: visible !important; opacity: 1 !important; transition: opacity 0.5s ease !important; background-color: transparent !important; }
         #network-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -999; pointer-events: none; background: #000; }
 
-        /* --- 1. HEADER & HAMBURGER --- */
+        /* --- 1. HEADER --- */
         header {
             position: fixed; top: 0; left: 0; width: 100%; padding: 20px 50px; 
             display: flex; align-items: center; justify-content: space-between; 
@@ -84,7 +84,7 @@
         .copyright { width: 100%; font-size: 0.8rem; color: #555; text-align: center; margin-top: 40px; }
 
         /* --- JELLY CURSOR --- */
-        .mbk-jelly-cursor { position: fixed; top: 0; left: 0; width: 30px; height: 30px; background-color: #32CD32; border-radius: 50%; pointer-events: none; z-index: 9999999999; mix-blend-mode: exclusion; opacity: 0.8; will-change: transform; transform-origin: center; }
+        .mbk-jelly-cursor { position: fixed; top: 0; left: 0; width: 30px; height: 30px; background-color: #32CD32; border-radius: 50%; pointer-events: none; z-index: 9999999999; mix-blend-mode: exclusion; opacity: 0; will-change: transform; transform-origin: center; transition: opacity 0.3s ease; }
 
         /* SOPRANOS KEYFRAMES: KIRMIZI */
         @keyframes sopranos-shake { 
@@ -95,7 +95,7 @@
             100% { transform: skew(0deg); } 
         }
 
-        /* --- 5. RADIO PLAYER (MİNİMAL) --- */
+        /* --- 5. RADIO PLAYER --- */
         #mbk-radio-player { position: fixed; bottom: 30px; right: 30px; z-index: 9999; background: rgba(10, 0, 0, 0.95); backdrop-filter: blur(10px); border: 1px solid rgba(255, 0, 0, 0.3); border-radius: 40px; padding: 8px 18px; display: flex; align-items: center; gap: 12px; transition: all 0.4s; box-shadow: 0 5px 20px rgba(0,0,0,0.6); max-width: 160px; overflow: hidden; }
         #mbk-radio-player:hover { max-width: 320px; border-color: #cc0000; }
         #radio-toggle { background: transparent; border: 1px solid #fff; color: #fff; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 12px; flex-shrink: 0; transition: 0.3s; }
@@ -269,7 +269,11 @@
         document.addEventListener("DOMContentLoaded", () => {
             const cursor = document.createElement("div"); cursor.classList.add("mbk-jelly-cursor"); document.body.appendChild(cursor);
             let mouseX = 0, mouseY = 0, cursorX = 0, cursorY = 0;
-            document.addEventListener("mousemove", e => { mouseX = e.clientX; mouseY = e.clientY; });
+            let firstMove = false; // İLK HAREKET KONTROLÜ
+            document.addEventListener("mousemove", e => { 
+                mouseX = e.clientX; mouseY = e.clientY; 
+                if (!firstMove) { cursor.style.opacity = "0.8"; firstMove = true; } // HAREKET EDİNCE GÖRÜNÜR YAP
+            });
             function animCursor() {
                 let distX = mouseX - cursorX; let distY = mouseY - cursorY;
                 cursorX += distX * 0.15; cursorY += distY * 0.15;
