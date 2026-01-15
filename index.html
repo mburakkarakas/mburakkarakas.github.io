@@ -223,70 +223,156 @@
 
 
 
-/* --- MOBİL UYUMLULUK (RESPONSIVE) --- */
+/* --- MOBİL UYUMLULUK (TAM ORTALI & SİMETRİK) --- */
         @media screen and (max-width: 768px) {
-            /* 1. Header ve Menü */
-            header { padding: 15px 20px; }
-            .header-left-group { gap: 15px; }
-            /* Mobilde üst menü linklerini gizle, sadece hamburger kalsın */
-            nav { display: none; } 
-            .logo-text { font-size: 16px; }
-            .logo-img { height: 30px; }
+            /* 1. Genel Hizalama */
+            body, .section-wrapper, .contact-section, .about-section, .hero-section {
+                text-align: center !important; /* Her şeyi ortala */
+            }
 
-            /* 2. Başlıklar ve Yazılar */
+            /* 2. Header (Logo Solda, Menü Sağda Kalmalı - Standart UX) */
+            header { 
+                padding: 15px 20px; 
+                justify-content: space-between; 
+            }
+            /* Mobilde üst linkleri gizle */
+            nav { display: none; } 
+            .logo-text { font-size: 18px; } /* Logoyu tık daha belirgin yap */
+            .logo-img { height: 35px; }
+
+            /* 3. Başlıklar ve Yazılar */
             .styled-title, .glitched-text, .contact-title, .about-title { 
-                font-size: 2.2rem !important; /* Dev başlıkları küçült */
+                font-size: 2.5rem !important; /* Telefonda okunur boyuta getir */
+                line-height: 1.1;
+                margin-bottom: 30px;
                 text-underline-offset: 8px;
+                display: inline-block; /* Ortalamak için şart */
             }
             .hero-title { font-size: 2rem; }
-            .hero-name { font-size: 1.1rem; }
+            .hero-name { font-size: 1.2rem; margin-bottom: 20px; }
+            
+            /* Yazı paragraflarını da ortala */
+            p, .about-description, .modal-desc, .info-panel p {
+                text-align: center !important; 
+                text-align-last: center !important; /* Son satırı da ortala */
+            }
 
-            /* 3. Genel Düzen */
+            /* 4. Genel Bölüm Düzeni */
             .section-wrapper, .contact-section, .about-section { 
-                padding: 60px 20px; 
-                min-height: auto; /* Mobilde zorunlu tam ekranı kaldır */
+                padding: 80px 20px; 
+                min-height: auto; 
+                display: flex;
+                flex-direction: column;
+                align-items: center; /* Yatayda ortala */
             }
             
-            /* 4. Game Station (Projects Sayfası) */
-            .game-section-layout { flex-direction: column; gap: 40px; }
-            .crt-outer { max-width: 100%; border-width: 3px; padding: 10px; }
-            .crt-screen { height: 250px; }
+            /* 5. Game Station (Projects) - Alt Alta Dizilim */
+            .game-section-layout { 
+                flex-direction: column; 
+                gap: 40px; 
+                width: 100%;
+                align-items: center;
+            }
+            .crt-outer { 
+                width: 100%; 
+                max-width: 350px; /* Telefona sığsın */
+                margin: 0 auto; /* Ortala */
+                border-width: 3px; 
+                padding: 10px; 
+            }
+            .crt-screen { height: 220px; }
             
-            /* Dikey yazıyı yataya çevir */
-            .genre-separator { height: auto; margin: 10px 0; }
+            /* Dikey yazıyı yataya çevirip ortala */
+            .genre-separator { height: auto; margin: 20px 0; }
             .genre-text { 
                 writing-mode: horizontal-tb; 
                 transform: rotate(0deg); 
                 font-size: 1.2rem; 
                 letter-spacing: 2px;
+                display: block;
+                text-align: center;
             }
             
-            .info-panel { width: 100%; min-height: auto; padding: 20px; }
-            .info-panel h3 { font-size: 1.5rem; }
+            .info-panel { 
+                width: 100%; 
+                min-height: auto; 
+                padding: 25px; 
+                text-align: center;
+                align-items: center;
+            }
+            .info-panel h3 { font-size: 1.8rem; margin-bottom: 15px; }
 
-            /* 5. About Sayfası */
-            .about-section { flex-direction: column-reverse; gap: 40px; text-align: center; padding-top: 100px; }
-            .about-text-wrapper { align-items: center; }
-            .about-description { text-align: center; font-size: 0.95rem; }
-            .about-photo-wrapper img { max-width: 80%; opacity: 0.5; filter: grayscale(0%); }
+            /* 6. About Sayfası - Fotoğraf Üste, Yazı Alta */
+            .about-section { 
+                flex-direction: column; /* Fotoğraf önce gelsin istersen bunu silme */
+                gap: 40px; 
+                padding-top: 100px; 
+            }
+            /* Fotoğraf */
+            .about-photo-wrapper {
+                width: 100%;
+                display: flex;
+                justify-content: center;
+                margin-bottom: 20px;
+            }
+            .about-photo-wrapper img { 
+                max-width: 70%; 
+                opacity: 0.8; 
+                filter: grayscale(0%); 
+            }
+            /* Yazı Alanı */
+            .about-text-wrapper { 
+                width: 100%;
+                align-items: center; 
+            }
 
-            /* 6. Footer */
-            .page-footer { flex-direction: column; text-align: center; gap: 30px; }
-            .footer-right { justify-content: center; }
-            .footer-center { margin: 0; }
+            /* 7. Contact Formu */
+            .contact-form { 
+                width: 100%; 
+                align-items: center; /* Butonu ortalar */
+            }
+            .form-input, .form-textarea { 
+                text-align: center; /* İçindeki yazıyı da ortala */
+                padding: 15px; 
+                font-size: 1rem; 
+            }
+            .send-btn { width: 100%; max-width: 200px; } /* Butonu biraz genişlet */
 
-            /* 7. Özellikler */
-            .mbk-jelly-cursor { display: none !important; } /* Mobilde cursor yok, gizle */
-            .marquee-text { font-size: 1.5rem; } /* Kayan yazıyı küçült */
+            /* 8. Footer */
+            .page-footer { 
+                flex-direction: column; 
+                text-align: center; 
+                gap: 30px; 
+                justify-content: center;
+            }
+            .footer-left, .footer-right, .footer-center {
+                align-items: center; 
+                justify-content: center;
+                width: 100%;
+            }
+            .footer-btn { 
+                margin: 5px 0; 
+                display: inline-block;
+            }
+
+            /* 9. Ekstralar */
+            .mbk-jelly-cursor { display: none !important; } /* Cursor gizle */
+            .marquee-text { font-size: 1.5rem; } 
             
-            /* Form ve Butonlar */
-            .contact-form { width: 100%; }
-            .form-input, .form-textarea { padding: 15px; font-size: 0.9rem; }
-            
-            /* Radyo Player (Mobilde sağ alta sıkışmasın, biraz küçülsün) */
-            #mbk-radio-player { bottom: 10px; right: 10px; padding: 5px 12px; max-width: 45px; }
-            #mbk-radio-player:hover { max-width: 280px; }
-            .station-name { font-size: 10px; }
+            /* Radyo Player (Sağ alt köşe yerine alt ortaya sabitle) */
+            #mbk-radio-player { 
+                bottom: 20px; 
+                left: 50%; 
+                transform: translateX(-50%); /* Tam ortala */
+                right: auto;
+                padding: 8px 20px; 
+                max-width: 90%; 
+                border-radius: 50px;
+                justify-content: space-between;
+                background: rgba(0,0,0,0.9);
+            }
+            #mbk-radio-player:hover { max-width: 90%; }
+            .volume-container { display: none; } /* Mobilde ses ayarı zor, gizle */
         }
         
     </style>
@@ -561,4 +647,5 @@
     </script>
 </body>
 </html>
+
 
