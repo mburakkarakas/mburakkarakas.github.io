@@ -164,7 +164,7 @@
         
         .social-link { 
             display: flex; align-items: center; justify-content: center; 
-            width: 34px; height: 34px; /* İkon kutusu boyutu (38 -> 34 yapıldı) */
+            width: 34px; height: 34px; 
             background-color: #fff; 
             border-radius: 50%; 
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
@@ -174,13 +174,12 @@
         }
         
         .social-img { 
-            width: 18px; height: 18px; /* İkon içi boyut (20 -> 18 yapıldı) */
+            width: 18px; height: 18px; 
             object-fit: contain; 
         }
 
-        .invert-me { filter: invert(1); } /* Gerekirse kullanılır */
+        .invert-me { filter: invert(1); } 
 
-        /* YENİ HOVER EFEKTİ: Stabil Büyüme */
         .social-link:hover {
             transform: scale(1.15) translateY(-3px); 
             box-shadow: 0 5px 15px rgba(255, 255, 255, 0.4); 
@@ -440,23 +439,22 @@
             });
         });
 
-        // --- HERO TITLES TILT ---
-        const smoothTiltItems = document.querySelectorAll('.smooth-tilt-item');
-        const lerp = (start, end, factor) => start + (end - start) * factor;
-        smoothTiltItems.forEach(el => {
-            let currentRotateY = 0, targetRotateY = 0, isHovering = false;
-            const update = () => {
-                if (!isHovering && Math.abs(targetRotateY - currentRotateY) < 0.05) { el.style.transform = `perspective(1000px) rotateY(0deg) scale(1)`; return; }
-                currentRotateY = lerp(currentRotateY, targetRotateY, 0.08);
-                el.style.transform = `perspective(1000px) rotateY(${currentRotateY}deg) scale(${isHovering?1.02:1})`;
-                requestAnimationFrame(update);
-            };
-            el.addEventListener('mousemove', e => {
-                if (!isHovering) { isHovering = true; update(); }
-                const rect = el.getBoundingClientRect();
-                targetRotateY = ((e.clientX - rect.left) / rect.width - 0.5) * 20;
-            });
-            el.addEventListener('mouseleave', () => { isHovering = false; targetRotateY = 0; });
+        // --- PROTECTION (SAĞ TIK VE KAYNAK KOD KORUMASI) ---
+        document.addEventListener('contextmenu', event => event.preventDefault());
+
+        document.querySelectorAll('img').forEach(img => {
+            img.setAttribute('draggable', 'false');
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (
+                e.key === 'F12' || 
+                (e.ctrlKey && e.shiftKey && e.key === 'I') || 
+                (e.ctrlKey && e.key === 'u') || 
+                (e.ctrlKey && e.key === 's')
+            ) {
+                e.preventDefault();
+            }
         });
     </script>
 </body>
