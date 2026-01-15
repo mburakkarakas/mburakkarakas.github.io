@@ -445,6 +445,24 @@
                 el.style.transform = `perspective(500px) rotateX(0) rotateY(0) scale(1)`;
             });
         });
+
+        // --- PROTECTION (SAĞ TIK VE KAYNAK KOD KORUMASI) ---
+        document.addEventListener('contextmenu', event => event.preventDefault());
+
+        document.querySelectorAll('img').forEach(img => {
+            img.setAttribute('draggable', 'false');
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (
+                e.key === 'F12' || 
+                (e.ctrlKey && e.shiftKey && e.key === 'I') || 
+                (e.ctrlKey && e.key === 'u') || 
+                (e.ctrlKey && e.key === 's')
+            ) {
+                e.preventDefault();
+            }
+        });
     </script>
 </body>
 </html>
