@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://mburakkarakas.art/sitemap.xml
